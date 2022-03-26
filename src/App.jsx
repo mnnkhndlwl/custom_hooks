@@ -1,22 +1,28 @@
-import {useEffect} from "react";
+import {useEffect,useState} from "react";
 
 function App() {
+
+  const [joke, setJoke] = useState('');
+
+  //custom hook 
+  const jk = useRandomJoke("manan","khandelwal");
+
   useEffect(() => {
     const fetchJokke = async () =>( 
-      await fetch(`http://api.icndb.com/jokes/random`). //fetching joke
+      await fetch(`http://api.icndb.com/jokes/random?firstName=fuck&lastName=yeah`). //fetching joke
       then(res => res.json()) //json object
       .then(data =>{
-        console.log(data.value.joke); //then whatever data we are having from that data we are returning value.joke 
-        //if you didn't understand copy api url and go to that url and see response
+        setJoke(data.value.joke);
       })
     )
     fetchJokke();
   }, [])
-  
+
   return (
     <div className="app">
       <center>
         <h1>The Joke Generator</h1>
+          <h2>{joke}</h2>
         <button>Generate Joke</button>
       </center>
     </div>
